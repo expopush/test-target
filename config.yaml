@@ -1,0 +1,30 @@
+# Configuration for the Expo Simulator
+
+server:
+  host: "0.0.0.0"
+  port: 9056
+  log_level: "info"
+
+# Probability (0.0 to 1.0) of batch-level HTTP failures
+batch_failures:
+  auth_failure: 0.0          # 401 Unauthorized
+  rate_limit: 0.0             # 429 Too Many Requests
+  server_error: 0.0           # 500 Internal Server Error
+  payload_too_large: 0.0      # 413 Payload Too Large
+
+# Probability (0.0 to 1.0) of individual ticket errors per message
+ticket_errors:
+  DeviceNotRegistered: 0.0
+  MessageTooBig: 0.0
+  MessageRateExceeded: 0.0
+  DeveloperError: 0.0
+  InvalidCredentials: 0.0
+
+# Probability (0.0 to 1.0) of individual receipt errors per ID
+receipt_errors:
+  DeviceNotRegistered: 0.0
+  MessageTooBig: 0.0
+  MessageRateExceeded: 0.0
+  DeveloperError: 0.0
+  InvalidCredentials: 0.0
+  missing_percent: 0.1       # Simulates receipt not yet generated (causes retry in library)
