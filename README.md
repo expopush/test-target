@@ -1,32 +1,40 @@
-# Expo Push API Simulator
+# Expo Push Test Target
 
-A stateless mock of the Expo Push API designed for load testing and robustness verification of the `expo-push-starter` library.
+[![Docker Image](https://github.com/expopush/test-target/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/expopush/test-target/pkgs/container/test-target)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## Features
-- **Stateless**: Does not store ticket IDs; results are generated randomly based on configuration.
-- **Granular Error Control**: Configure the probability of every specific Expo error type via YAML.
-- **FastAPI Powered**: Includes a built-in Swagger UI at `/docs`.
+A Python-based testing utility and Docker container used to simulate client interactions and verify the end-to-end flow of the Expo Push system.
 
-## Usage
+## Getting Started
 
-### Local Execution
-1. Install dependencies: `pip install -r requirements.txt`
-2. Run the app: `python app.py`
+### Run with Docker
 
-### Docker Execution
-1. Build: `docker build -t expo-simulator .`
-2. Run: `docker run -p 9056:9056 expo-simulator`
+The easiest way to use the test target is via the official Docker image:
 
-## Configuration (`config.yaml`)
+```bash
+docker pull ghcr.io/expopush/test-target:latest
+docker run -p 8080:8080 ghcr.io/expopush/test-target:latest
+```
 
-Modify `config.yaml` to adjust error rates (values from `0.0` to `1.0`):
+### Local Development
 
-- **batch_failures**: HTTP-level failures (401, 429, 500).
-- **ticket_errors**: Individual message errors returned in the `/push/send` response.
-- **receipt_errors**: Individual receipt errors returned in the `/push/getReceipts` response.
-- **missing_percent**: Probability that a receipt is simply omitted from the response map (simulates "not yet ready").
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Run the application:
+   ```bash
+   python app.py
+   ```
 
-## Endpoints
-- `POST /--/api/v2/push/send`: Bulk send notifications.
-- `POST /--/api/v2/push/getReceipts`: Bulk fetch delivery receipts.
-- `GET /health`: Check simulator status and current configuration.
+## Integration
+
+The test target interacts with the [Expo Push Test Harnesses](https://github.com/expopush/test-harnesses) to trigger notifications and validate that they arrive at the intended destination with the correct payload.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+---
+
+**Disclaimer**: This project is an independent, open-source work and is not affiliated with, endorsed by, or sponsored by 650 Industries, Inc. or the official Expo project. "Expo" is a trademark of 650 Industries, Inc.
