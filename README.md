@@ -1,7 +1,10 @@
 # Expo Push Test Target
 
-[![Docker Image](https://github.com/expopush/test-target/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/expopush/test-target/pkgs/container/test-target)
+[![Docker Publish (GHCR)](https://github.com/expopush/test-target/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/expopush/test-target/actions/workflows/docker-publish.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Python Version](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python)](https://www.python.org/downloads/)
+[![Multi-Arch](https://img.shields.io/badge/Platform-linux/amd64%20%7C%20linux/arm64-lightgrey)](https://github.com/expopush/test-target/pkgs/container/test-target)
+[![Dependabot](https://img.shields.io/badge/Dependabot-enabled-brightgreen.svg?logo=dependabot)](https://github.com/expopush/test-target/network/updates)
 
 A Python-based testing utility and Docker container used to simulate client interactions and verify the end-to-end flow of the Expo Push system.
 
@@ -13,7 +16,7 @@ The easiest way to use the test target is via the official Docker image:
 
 ```bash
 docker pull ghcr.io/expopush/test-target:latest
-docker run -p 9056:9056 ghcr.io/expopush/test-target:latest
+docker run -p 8080:8080 ghcr.io/expopush/test-target:latest
 ```
 
 ### Local Development
