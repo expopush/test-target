@@ -12,7 +12,6 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
-
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -21,7 +20,6 @@ updates:
       docker-images:
         patterns:
           - "*"
-
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
