@@ -13,7 +13,7 @@ The easiest way to use the test target is via the official Docker image:
 
 ```bash
 docker pull ghcr.io/expopush/test-target:latest
-docker run -p 8080:8080 ghcr.io/expopush/test-target:latest
+docker run -p 9056:9056 ghcr.io/expopush/test-target:latest
 ```
 
 ### Local Development
