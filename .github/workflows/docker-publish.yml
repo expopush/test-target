@@ -49,14 +49,16 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push Docker image
+      # Single-arch build loaded into the local Docker daemon purely for scanning.
+      # The previous setup scanned ghcr.io/<image>:<sha>, which never existed anywhere:
+      # PR builds weren't pushed or loaded (buildx cache only), and push builds never
+      # tagged the bare sha — so Trivy failed on every run, main included.
+      - name: Build image for scan
         uses: docker/build-push-action@v7
-        id: build-push
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
+          load: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Run Trivy vulnerability scanner
@@ -66,6 +68,18 @@ jobs:
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
+
+      # Multi-arch build and publish, only after the scan and only off PRs.
+      - name: Build and push Docker image
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v7
+        id: build-push
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
